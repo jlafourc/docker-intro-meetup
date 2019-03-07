@@ -1,4 +1,7 @@
-# Introduction à Docker
+# Débuter avec Docker
+
+https://jlafourc.github.io/docker-intro-meetup/
+https://github.com/jlafourc/docker-intro-meetup/
 
 ---
 
