@@ -65,6 +65,8 @@ $ docker run <options> <image> <commande>
 
 ---
 
+## Les layers
+
 * Les layers de l'image sont en lecture seule
 * Chaque layer est appliqué successivement pour reconstituer un système de fichiers
 * Mutualisation possible des layers entre plusieurs images
@@ -283,3 +285,64 @@ $ docker volume rm demo-vol
 ```bash
 $ docker container run -e MA_VAR=demo --rm ubuntu env
 ```
+---
+
+## Exemple complet
+
+```bash
+$ docker volume create wordpress_data
+```
+
+```bash
+$ docker network create wordpress
+```
+
+```bash
+$ docker run -d --name wp_db --network wordpress \
+    -e MYSQL_ROOT_PASSWORD=somewordpress \
+    -e MYSQL_DATABASE=wordpress \
+    -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=wordpress \
+    -v wordpress_data:/var/lib/mysql mysql:5.7 
+```
+
+```bash
+$ docker run -d --name wp_app --network wordpress \
+    -e WORDPRESS_DB_HOST=wp_db:3306 \
+    -e WORDPRESS_DB_USER=wordpress \
+    -e WORDPRESS_DB_PASSWORD=wordpress -e WORDPRESS_DB_NAME=wordpress \
+    -p 8080:80 wordpress:latest 
+```
+
+---
+
+## Pour aller plus loin
+
+---
+
+https://labs.play-with-docker.com/
+
+---
+
+## Créer ses propres images 
+
+* A partir d'autres images
+* Ajout de nos propres fichiers et scripts
+* Création d'un Dockerfile
+* Meetup à part entière ;)
+
+---
+
+## docker-compose
+
+* Monter des stacks applicatives complètes
+* Sur son poste de dev
+* Définition dans un fichier docker-compose.yml
+
+---
+
+## Docker Swarm
+
+* Orchestrateur de conteneurs
+* Définitions de contrats de services
+* Très simple à mettre en place
+  * Alternative à Kubernetes 
